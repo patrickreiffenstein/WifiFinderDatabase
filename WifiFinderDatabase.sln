@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderDemo", "WifiFinderDemo\WifiFinderDemo.csproj", "{88A3CF8E-D768-4D70-9D6B-3F86AAE7671B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderSystem", "WifiFinderSystem\WifiFinderSystem.csproj", "{F969359D-F785-48BF-99CF-E6568F8EB335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderPositionSystem", "WifiFinderPositionSystem\WifiFinderPositionSystem.csproj", "{FC1A46EF-9715-4DEF-800B-E66F37332C12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderPositionSystemTester", "WifiFinderPositionSystemTester\WifiFinderPositionSystemTester.csproj", "{4AB155FE-C91F-4705-BD9E-638E02F598A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88A3CF8E-D768-4D70-9D6B-3F86AAE7671B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A3CF8E-D768-4D70-9D6B-3F86AAE7671B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A3CF8E-D768-4D70-9D6B-3F86AAE7671B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A3CF8E-D768-4D70-9D6B-3F86AAE7671B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F969359D-F785-48BF-99CF-E6568F8EB335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F969359D-F785-48BF-99CF-E6568F8EB335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F969359D-F785-48BF-99CF-E6568F8EB335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F969359D-F785-48BF-99CF-E6568F8EB335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC1A46EF-9715-4DEF-800B-E66F37332C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1A46EF-9715-4DEF-800B-E66F37332C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1A46EF-9715-4DEF-800B-E66F37332C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1A46EF-9715-4DEF-800B-E66F37332C12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AB155FE-C91F-4705-BD9E-638E02F598A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB155FE-C91F-4705-BD9E-638E02F598A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AB155FE-C91F-4705-BD9E-638E02F598A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AB155FE-C91F-4705-BD9E-638E02F598A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C20B740A-A782-4EEA-A8B9-4E81951022BE}
+	EndGlobalSection
+EndGlobal

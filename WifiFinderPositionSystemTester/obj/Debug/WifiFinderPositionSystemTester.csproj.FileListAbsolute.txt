@@ -1,0 +1,10 @@
+C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystemTester\bin\Debug\WifiFinderPositionSystemTester.exe.config
+C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystemTester\bin\Debug\WifiFinderPositionSystemTester.exe
+C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystemTester\bin\Debug\WifiFinderPositionSystemTester.pdb
+C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystemTester\bin\Debug\WifiFinderPositionSystem.dll
+C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystemTester\bin\Debug\WifiFinderPositionSystem.pdb
+C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystemTester\obj\Debug\WifiFinderPositionSystemTester.csprojAssemblyReference.cache
+C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystemTester\obj\Debug\WifiFinderPositionSystemTester.csproj.CoreCompileInputs.cache
+C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystemTester\obj\Debug\WifiFinderPositionSystemTester.csproj.CopyComplete
+C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystemTester\obj\Debug\WifiFinderPositionSystemTester.exe
+C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystemTester\obj\Debug\WifiFinderPositionSystemTester.pdb
