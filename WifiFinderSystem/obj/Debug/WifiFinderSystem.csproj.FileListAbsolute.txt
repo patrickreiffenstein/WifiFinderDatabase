@@ -1,6 +1,0 @@
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderSystem\bin\Debug\WifiFinderSystem.dll
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderSystem\bin\Debug\WifiFinderSystem.pdb
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderSystem\obj\Debug\WifiFinderSystem.csproj.CoreCompileInputs.cache
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderSystem\obj\Debug\WifiFinderSystem.dll
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderSystem\obj\Debug\WifiFinderSystem.pdb
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderSystem\obj\Debug\WifiFinderSystem.csprojAssemblyReference.cache

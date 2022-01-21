@@ -1,6 +1,0 @@
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystem\bin\Debug\WifiFinderPositionSystem.dll
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystem\bin\Debug\WifiFinderPositionSystem.pdb
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystem\obj\Debug\WifiFinderPositionSystem.csprojAssemblyReference.cache
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystem\obj\Debug\WifiFinderPositionSystem.csproj.CoreCompileInputs.cache
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystem\obj\Debug\WifiFinderPositionSystem.dll
-C:\Users\payth\source\repos\WifiFinderDatabase\WifiFinderPositionSystem\obj\Debug\WifiFinderPositionSystem.pdb
