@@ -8,6 +8,7 @@ namespace WifiFinderPositionSystemTester
         {
             WifiFinderPositionSystem.WifiFinderPositionSystem ting = new WifiFinderPositionSystem.WifiFinderPositionSystem();
             WifiFinderPositionSystem.Coordinate tin = ting.FindUnit(ting.receivers);
+            Console.Read();
             Console.WriteLine(tin.x + " " + tin.y);
             Console.Read();
         }
