@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WifiFinderPositionSystem
 {
@@ -19,7 +20,7 @@ namespace WifiFinderPositionSystem
                 return null;
             }
 
-            CalculateThreeCircleIntersection(new Circle(1, 1, 2), new Circle(1, 5, 3), new Circle(7, 1, 2));
+            Console.WriteLine(CalculateThreeCircleIntersection(new Circle(1, 1, 2), new Circle(1, 5, 3), new Circle(7, 1, 2)));
 
             return null;
 
@@ -86,7 +87,7 @@ namespace WifiFinderPositionSystem
 
         private const double EPSILON = 0.001;
 
-        private bool CalculateThreeCircleIntersection(
+        private Point? CalculateThreeCircleIntersection(
             Circle circle1Original,
             Circle circle2Original,
             Circle circle3Original,
@@ -97,8 +98,7 @@ namespace WifiFinderPositionSystem
             // TRIN 3: Find 3 tætteste punkter (dem som er tæt på midten).
             // TRIN 4: Find det centrum de 3 punkter udgør.
 
-
-            double a, dx, dy, d, h;
+            double dx, dy, d;
 
             // scaled radii
             Circle c0, c1, c2;
@@ -107,8 +107,12 @@ namespace WifiFinderPositionSystem
             c1 = new Circle(circle2Original.X, circle2Original.Y, circle2Original.Radius * scale);
             c2 = new Circle(circle3Original.X, circle3Original.Y, circle3Original.Radius * scale);
 
-            // TRIN 1
-            // C0 — C1
+            // -- TRIN 1
+            // Tjek om cirklerne skærer hinanden, hvis ikke, så udvid radius.
+            // Derudover, tjek om cirklerne indeholder hinanden, hvis det er sandt har man i virkeligheden kun 2 cirkler
+            // og man kan ikke finde et enkelt centrum.
+
+            // - C0 — C1
             // dx and dy are the vertical and horizontal distances between
             // the circle centers.
             dx = c1.X - c0.X;
@@ -117,55 +121,106 @@ namespace WifiFinderPositionSystem
             // Determine the straight-line distance between the centers.
             d = Math.Sqrt((dy * dy) + (dx * dx));
 
-            // Check for solvability.
+            // Tjek om cirklerne 0 og 1 skærer hinanden.
             if (d > (c0.Radius + c1.Radius))
             {
-                // no solution. circles do not intersect.
                 return CalculateThreeCircleIntersection(circle1Original, circle2Original, circle3Original, scale + EPSILON);
             }
 
-            // C1 — C2
-            // dx and dy are the vertical and horizontal distances between
-            // the circle centers.
+            // Tjek om cirklerne 0 og 1 er inde i hinanden.
+            if (d < Math.Abs(c0.Radius - c1.Radius))
+            {
+                return null;
+            }
+
+            // - C1 — C2
             dx = c2.X - c1.X;
             dy = c2.Y - c1.Y;
 
-            // Determine the straight-line distance between the centers.
             d = Math.Sqrt((dy * dy) + (dx * dx));
 
-            // Check for solvability.
+            // Tjek om cirklerne 1 og 2 skærer hiannden.
             if (d > (c1.Radius + c2.Radius))
             {
-                // no solution. circles do not intersect.
                 return CalculateThreeCircleIntersection(circle1Original, circle2Original, circle3Original, scale + EPSILON);
             }
 
-            // C0 — C2
-            // dx and dy are the vertical and horizontal distances between
-            // the circle centers.
+            // Tjek om cirklerne 1 og 2 er inde i hinanden.
+            if (d < Math.Abs(c1.Radius - c2.Radius))
+            {
+                return null;
+            }
+
+            // - C0 — C2
             dx = c2.X - c0.X;
             dy = c2.Y - c0.Y;
 
-            // Determine the straight-line distance between the centers.
             d = Math.Sqrt((dy * dy) + (dx * dx));
 
-            // Check for solvability.
+            // Tjek om cirklerne 0 og 2 skærer hinanden.
             if (d > (c0.Radius + c2.Radius))
             {
-                // no solution. circles do not intersect.
                 return CalculateThreeCircleIntersection(circle1Original, circle2Original, circle3Original, scale + EPSILON);
             }
 
-            // ANDEN DEL
-            if (d < Math.Abs(c0.Radius - c1.Radius))
+            // Tjek om cirklerne 0 og 2 er inde i hinanden.
+            if (d < Math.Abs(c0.Radius - c2.Radius))
             {
-                // no solution. one circle is contained in the other
-                return false;
+                return null;
             }
 
-            // TRIN 2 her et sted
-            List<Point> intersectionPoints;
-            // TODO: Find alle skæringspunkter og kom dem i listen.
+            // -- TRIN 2: find alle skæringspunkter
+            List<Point> intersectionPoints = new List<Point>(6);
+
+            intersectionPoints.AddRange(FindRadicalPoints(c0, c1));
+            intersectionPoints.AddRange(FindRadicalPoints(c1, c2));
+            intersectionPoints.AddRange(FindRadicalPoints(c2, c0));
+
+            // -- TRIN 3 skal finde de tætteste punkter.
+            List<(double, Point)> distances = new List<(double, Point)>(intersectionPoints.Count);
+
+            Point[] receivers = new Point[]
+            {
+                new Point(c0.X, c0.Y),
+                new Point(c1.X, c1.Y),
+                new Point(c2.X, c2.Y),
+            };
+
+            distances.AddRange(from Point item in intersectionPoints
+                               select (SumOfDistances(item, receivers), item));
+
+            var sortedDistances = from intersectionPoint in distances
+                                  orderby intersectionPoint.Item1 ascending
+                                  select intersectionPoint.Item2;
+
+            IEnumerable<Point> centerIntersections = sortedDistances.Take(3);
+
+            // -- TRIN 4: Find det centrum de tre punkter udgør
+            Point sum = Point.Zero;
+            foreach (Point item in centerIntersections)
+            {
+                sum += item;
+            }
+
+            Console.WriteLine("Scale: " + scale);
+
+            // TODO: Eksperimenter med vinkelhalverings ting.
+            return new Point(sum.X / centerIntersections.Count(), sum.Y / centerIntersections.Count());
+        }
+
+        private IEnumerable<Point> FindRadicalPoints(Circle c0, Circle c1)
+        {
+            double dx, dy, d;
+            double a, h;
+
+            // C0 — C1
+            // dx and dy are the vertical and horizontal distances between
+            // the circle centers.
+            dx = c1.X - c0.X;
+            dy = c1.Y - c0.Y;
+
+            // Determine the straight-line distance between the centers.
+            d = Math.Sqrt((dy * dy) + (dx * dx));
 
             // 'point 2' is the point where the line through the circle
             // intersection points crosses the line between the circle
@@ -190,37 +245,20 @@ namespace WifiFinderPositionSystem
             Point r = new Point(-dy * (h / d), dx * (h / d));
 
             // Determine the absolute intersection points.
-            Point ip1 = p2 + r;
-            Point ip2 = p2 - r;
+            yield return p2 + r;
+            yield return p2 - r;
+        }
 
-            Console.WriteLine($"INTERSECTION Circle1 AND Circle2: ({ip1.X}, {ip1.Y}) AND ({ip2.X}, {ip2.Y})");
+        private double SumOfDistances(Point origin, params Point[] otherPoints)
+        {
+            double sum = 0;
 
-            // Lets determine if circle 3 intersects at either of the above intersection points.
-            dx = ip1.X - c2.X;
-            dy = ip1.Y - c2.Y;
-            double d1 = Math.Sqrt((dy * dy) + (dx * dx));
-
-            dx = ip2.X - c2.X;
-            dy = ip2.Y - c2.Y;
-            double d2 = Math.Sqrt((dy * dy) + (dx * dx));
-
-            if (Math.Abs(d1 - c2.Radius) < EPSILON)
+            for (int i = 0; i < otherPoints.Length; i++)
             {
-                Console.WriteLine($"INTERSECTION Circle1 AND Circle2 AND Circle3: ({ip1.X}, {ip1.Y})");
-            }
-            else if (Math.Abs(d2 - c2.Radius) < EPSILON)
-            {
-                // here was an error
-                Console.WriteLine($"INTERSECTION Circle1 AND Circle2 AND Circle3: ({ip2.X}, {ip2.Y})");
-            }
-            else
-            {
-                Console.WriteLine("INTERSECTION Circle1 AND Circle2 AND Circle3: NONE");
+                sum += origin.Distance(otherPoints[i]);
             }
 
-            Console.WriteLine("Scale: " + scale);
-
-            return true;
+            return sum;
         }
 
         private readonly struct Point
@@ -234,6 +272,8 @@ namespace WifiFinderPositionSystem
                 Y = y;
             }
 
+            public static Point Zero => new Point(0, 0);
+
             public static Point operator +(Point p1, Point p2)
             {
                 return new Point(p1.X + p2.X, p1.Y + p2.Y);
@@ -242,6 +282,17 @@ namespace WifiFinderPositionSystem
             public static Point operator -(Point p1, Point p2)
             {
                 return new Point(p1.X - p2.X, p1.Y - p2.Y);
+            }
+
+            public override string ToString()
+            {
+                return $"({X}, {Y})";
+            }
+
+            public double Distance(Point p)
+            {
+                // TODO: Make this a sum of squares to avoid squareroot operation.
+                return Math.Sqrt(Math.Pow(this.X - p.X, 2) + Math.Pow(this.Y - p.Y, 2));
             }
         }
 
