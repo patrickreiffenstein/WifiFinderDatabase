@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace WifiFinderSystem
 {
-    public class WifiFinderSystem
+    public static class WifiFinderSystem
     {
         public readonly struct Data
         {
@@ -48,6 +50,64 @@ namespace WifiFinderSystem
                 num += devicePackets.Count;
             }
             return num;
+        }
+
+        private static Dictionary<long, Dictionary<byte, byte>> GetMedianRSSi()
+        {
+            Dictionary<long, Dictionary<byte, byte>> medianValues = new Dictionary<long, Dictionary<byte, byte>>();
+
+            foreach (var macDevice in dataDictionary)
+            {
+                Dictionary<byte, List<byte>> temporaryValues = new Dictionary<byte, List<byte>>();
+                foreach (Data data in macDevice.Value)
+                {
+                    if (!temporaryValues.TryGetValue(data.ID, out List<byte> rssiValues))
+                    {
+                        rssiValues = new List<byte>();
+                        temporaryValues.Add(data.ID, rssiValues);
+                    }
+
+                    rssiValues.Add(data.RSSi);
+                }
+
+                medianValues[macDevice.Key] = new Dictionary<byte, byte>();
+
+                foreach (var item in temporaryValues)
+                {
+                    List<byte> rssiValues = item.Value;
+                    rssiValues.Sort();
+
+                    byte median = rssiValues[rssiValues.Count / 2];
+
+                    medianValues[macDevice.Key][item.Key] = median;
+                }
+            }
+
+            return medianValues;
+        }
+
+        public static string PrepareSerializedData()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // MAC;DEVICE1.rssi,DEVIC2.rssi,DEVICE3.rssi
+            foreach (var item in GetMedianRSSi())
+            {
+                sb.Append(item.Key);
+                sb.Append(';');
+
+                foreach (var capturedByDevice in item.Value)
+                {
+                    sb.Append(capturedByDevice.Key);
+                    sb.Append('.');
+                    sb.Append(capturedByDevice.Value);
+                    sb.Append(',');
+                }
+
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
         }
 
         public static void AddData(long MacAddress, byte ID, byte RSSi)
