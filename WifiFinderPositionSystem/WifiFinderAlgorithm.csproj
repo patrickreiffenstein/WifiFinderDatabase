@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F969359D-F785-48BF-99CF-E6568F8EB335}</ProjectGuid>
+    <ProjectGuid>{FC1A46EF-9715-4DEF-800B-E66F37332C12}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WifiFinderSystem</RootNamespace>
-    <AssemblyName>WifiFinderSystem</AssemblyName>
+    <RootNamespace>WifiFinderAlgorithm</RootNamespace>
+    <AssemblyName>WifiFinderAlgorithm</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WifiFinderSystem.cs" />
+    <Compile Include="Coordinate.cs" />
+    <Compile Include="Receiver.cs" />
+    <Compile Include="WifiFinderAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

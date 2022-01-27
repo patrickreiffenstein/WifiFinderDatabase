@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WifiFinderPositionSystem
+namespace WifiFinderAlgorithm
 {
-    public class WifiFinderPositionSystem
+    public class WifiFinderAlgorithm
     {
         public Receiver[] receivers = new Receiver[3]
         {

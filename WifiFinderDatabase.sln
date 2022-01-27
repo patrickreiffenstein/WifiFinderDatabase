@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderDemo", "WifiFinderDemo\WifiFinderDemo.csproj", "{88A3CF8E-D768-4D70-9D6B-3F86AAE7671B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderDatabaseDemo", "WifiFinderDemo\WifiFinderDatabaseDemo.csproj", "{88A3CF8E-D768-4D70-9D6B-3F86AAE7671B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderSystem", "WifiFinderSystem\WifiFinderSystem.csproj", "{F969359D-F785-48BF-99CF-E6568F8EB335}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderDatabase", "WifiFinderSystem\WifiFinderDatabase.csproj", "{F969359D-F785-48BF-99CF-E6568F8EB335}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderPositionSystem", "WifiFinderPositionSystem\WifiFinderPositionSystem.csproj", "{FC1A46EF-9715-4DEF-800B-E66F37332C12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderAlgorithm", "WifiFinderPositionSystem\WifiFinderAlgorithm.csproj", "{FC1A46EF-9715-4DEF-800B-E66F37332C12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderPositionSystemTester", "WifiFinderPositionSystemTester\WifiFinderPositionSystemTester.csproj", "{4AB155FE-C91F-4705-BD9E-638E02F598A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WifiFinderAlgorithmTester", "WifiFinderPositionSystemTester\WifiFinderAlgorithmTester.csproj", "{4AB155FE-C91F-4705-BD9E-638E02F598A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7A594FCE-E360-4F70-A5BC-1125DB7E02D5}"
 	ProjectSection(SolutionItems) = preProject

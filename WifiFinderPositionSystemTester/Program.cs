@@ -1,4 +1,5 @@
 ﻿using System;
+using WifiFinderAlgorithm;
 
 namespace WifiFinderPositionSystemTester
 {
@@ -6,10 +7,10 @@ namespace WifiFinderPositionSystemTester
     {
         static void Main(string[] args)
         {
-            WifiFinderPositionSystem.WifiFinderPositionSystem ting = new WifiFinderPositionSystem.WifiFinderPositionSystem();
-            WifiFinderPositionSystem.Coordinate tin = ting.FindUnit(ting.receivers);
+            var ting = new WifiFinderAlgorithm.WifiFinderAlgorithm();
+            Coordinate ting2 = ting.FindUnit(ting.receivers);
             Console.Read();
-            Console.WriteLine(tin.x + " " + tin.y);
+            Console.WriteLine(ting2.x + " " + ting2.y);
             Console.Read();
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace WifiFinderPositionSystem
+﻿namespace WifiFinderAlgorithm
 {
     public class Receiver
     {

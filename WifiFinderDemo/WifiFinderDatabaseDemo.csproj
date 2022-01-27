@@ -84,9 +84,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WifiFinderSystem\WifiFinderSystem.csproj">
+    <ProjectReference Include="..\WifiFinderSystem\WifiFinderDatabase.csproj">
       <Project>{f969359d-f785-48bf-99cf-e6568f8eb335}</Project>
-      <Name>WifiFinderSystem</Name>
+      <Name>WifiFinderDatabase</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
