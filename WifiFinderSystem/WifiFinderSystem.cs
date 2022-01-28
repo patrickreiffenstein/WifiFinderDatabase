@@ -88,6 +88,8 @@ namespace WifiFinderSystem
 
         public static string PrepareSerializedData()
         {
+            RefreshData(5);
+
             StringBuilder sb = new StringBuilder();
 
             // MAC;DEVICE1.rssi,DEVIC2.rssi,DEVICE3.rssi

@@ -32,6 +32,11 @@ namespace WifiFinderDatabaseProgram
         {
             serialPort1.Close();
 
+            if (comboBoxComPort1.SelectedItem is null)
+            {
+                return;
+            }
+
             serialPort1.PortName = (string)comboBoxComPort1.SelectedItem;
             serialPort1.Open();
         }
@@ -40,6 +45,11 @@ namespace WifiFinderDatabaseProgram
         {
             serialPort2.Close();
 
+            if (comboBoxComPort1.SelectedItem is null)
+            {
+                return;
+            }
+
             serialPort2.PortName = (string)comboBoxComPort2.SelectedItem;
             serialPort2.Open();
         }
@@ -47,6 +57,11 @@ namespace WifiFinderDatabaseProgram
         private void comboBoxComPort3_SelectedIndexChanged(object sender, EventArgs e)
         {
             serialPort3.Close();
+
+            if (comboBoxComPort1.SelectedItem is null)
+            {
+                return;
+            }
 
             serialPort3.PortName = (string)comboBoxComPort3.SelectedItem;
             serialPort3.Open();
