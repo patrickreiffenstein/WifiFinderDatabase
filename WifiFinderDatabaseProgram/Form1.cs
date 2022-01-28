@@ -142,6 +142,11 @@ namespace WifiFinderDatabaseProgram
 
         private void NetworkLoop()
         {
+            if (tcpListener is null)
+            {
+                return;
+            }
+
             if (tcpListener.Pending())
             {
                 connectedClients.Add(tcpListener.AcceptTcpClient());
@@ -170,6 +175,11 @@ namespace WifiFinderDatabaseProgram
                         data = Encoding.ASCII.GetBytes(WifiFinderSystem.WifiFinderSystem.PrepareSerializedData());
                     }
 
+                    byte[] lengthBytes = BitConverter.GetBytes((uint)data.Length);
+
+                    // skriv data længden.
+                    stream.Write(lengthBytes, 0, lengthBytes.Length);
+
                     // skriv data til stream.
                     stream.Write(data, 0, data.Length);
                 }
@@ -183,6 +193,8 @@ namespace WifiFinderDatabaseProgram
 
         private void buttonStartServer_Click(object sender, EventArgs e)
         {
+            tcpListener?.Stop();
+            tcpListener = new TcpListener(System.Net.IPAddress.Any, 20_000);
             tcpListener.Start();
         }
     }

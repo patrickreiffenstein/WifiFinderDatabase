@@ -4,16 +4,32 @@ using System.Linq;
 
 namespace WifiFinderAlgorithm
 {
-    public class WifiFinderAlgorithm
+    public static class WifiFinderAlgorithm
     {
+        /*
         public Receiver[] receivers = new Receiver[3]
         {
             new Receiver(new Coordinate(1, 1), 2),
             new Receiver(new Coordinate(1, 5), 3),
             new Receiver(new Coordinate(7, 1), 2),
-        };
+        };*/
 
-        public Coordinate FindUnit(Receiver[] receivers)
+        public static Point? FindDevice(params Receiver[] receivers)
+        {
+            if (receivers.Length < 3)
+            {
+                return null;
+            }
+
+            var circles = from receiver in receivers
+                          select new Circle(receiver.coordinate.x, receiver.coordinate.y, receiver.signalStrength);
+
+            Circle[] circleArray = circles.ToArray();
+
+            return CalculateThreeCircleIntersection(circleArray[0], circleArray[1], circleArray[2]);
+        }
+
+        public static Coordinate FindUnit(Receiver[] receivers)
         {
             if (receivers.Length < 3)
             {
@@ -87,7 +103,7 @@ namespace WifiFinderAlgorithm
 
         private const double EPSILON = 0.001;
 
-        private Point? CalculateThreeCircleIntersection(
+        private static Point? CalculateThreeCircleIntersection(
             Circle circle1Original,
             Circle circle2Original,
             Circle circle3Original,
@@ -208,7 +224,7 @@ namespace WifiFinderAlgorithm
             return new Point(sum.X / centerIntersections.Count(), sum.Y / centerIntersections.Count());
         }
 
-        private IEnumerable<Point> FindRadicalPoints(Circle c0, Circle c1)
+        private static IEnumerable<Point> FindRadicalPoints(Circle c0, Circle c1)
         {
             double dx, dy, d;
             double a, h;
@@ -249,7 +265,7 @@ namespace WifiFinderAlgorithm
             yield return p2 - r;
         }
 
-        private double SumOfDistances(Point origin, params Point[] otherPoints)
+        private static double SumOfDistances(Point origin, params Point[] otherPoints)
         {
             double sum = 0;
 
@@ -261,7 +277,7 @@ namespace WifiFinderAlgorithm
             return sum;
         }
 
-        private readonly struct Point
+        public readonly struct Point
         {
             public readonly double X;
             public readonly double Y;
