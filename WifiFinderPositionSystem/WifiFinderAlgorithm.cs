@@ -102,126 +102,134 @@ namespace WifiFinderAlgorithm
         }
 
         private const double EPSILON = 0.001;
+        private const int MaxIterations = 100000;
 
         private static Point? CalculateThreeCircleIntersection(
             Circle circle1Original,
             Circle circle2Original,
-            Circle circle3Original,
-            double scale=1)
+            Circle circle3Original)
         {
-            // TRIN 1: Find den rigtige skalering, så alle cirkler mindst skærer hinanden parvis.
-            // TRIN 2: Udregn alle skæringspunkt kombinationerne, der skulle gerne være 6 punkter.
-            // TRIN 3: Find 3 tætteste punkter (dem som er tæt på midten).
-            // TRIN 4: Find det centrum de 3 punkter udgør.
-
-            double dx, dy, d;
-
-            // scaled radii
-            Circle c0, c1, c2;
-
-            c0 = new Circle(circle1Original.X, circle1Original.Y, circle1Original.Radius * scale);
-            c1 = new Circle(circle2Original.X, circle2Original.Y, circle2Original.Radius * scale);
-            c2 = new Circle(circle3Original.X, circle3Original.Y, circle3Original.Radius * scale);
-
-            // -- TRIN 1
-            // Tjek om cirklerne skærer hinanden, hvis ikke, så udvid radius.
-            // Derudover, tjek om cirklerne indeholder hinanden, hvis det er sandt har man i virkeligheden kun 2 cirkler
-            // og man kan ikke finde et enkelt centrum.
-
-            // - C0 — C1
-            // dx and dy are the vertical and horizontal distances between
-            // the circle centers.
-            dx = c1.X - c0.X;
-            dy = c1.Y - c0.Y;
-
-            // Determine the straight-line distance between the centers.
-            d = Math.Sqrt((dy * dy) + (dx * dx));
-
-            // Tjek om cirklerne 0 og 1 skærer hinanden.
-            if (d > (c0.Radius + c1.Radius))
+            double scale = 1;
+            for (int i = 1; i < MaxIterations; i++)
             {
-                return CalculateThreeCircleIntersection(circle1Original, circle2Original, circle3Original, scale + EPSILON);
-            }
+                scale = EPSILON * i;
 
-            // Tjek om cirklerne 0 og 1 er inde i hinanden.
-            if (d < Math.Abs(c0.Radius - c1.Radius))
-            {
-                return null;
-            }
+                // TRIN 1: Find den rigtige skalering, så alle cirkler mindst skærer hinanden parvis.
+                // TRIN 2: Udregn alle skæringspunkt kombinationerne, der skulle gerne være 6 punkter.
+                // TRIN 3: Find 3 tætteste punkter (dem som er tæt på midten).
+                // TRIN 4: Find det centrum de 3 punkter udgør.
 
-            // - C1 — C2
-            dx = c2.X - c1.X;
-            dy = c2.Y - c1.Y;
+                double dx, dy, d;
 
-            d = Math.Sqrt((dy * dy) + (dx * dx));
+                // scaled radii
+                Circle c0, c1, c2;
 
-            // Tjek om cirklerne 1 og 2 skærer hiannden.
-            if (d > (c1.Radius + c2.Radius))
-            {
-                return CalculateThreeCircleIntersection(circle1Original, circle2Original, circle3Original, scale + EPSILON);
-            }
+                c0 = new Circle(circle1Original.X, circle1Original.Y, circle1Original.Radius * scale);
+                c1 = new Circle(circle2Original.X, circle2Original.Y, circle2Original.Radius * scale);
+                c2 = new Circle(circle3Original.X, circle3Original.Y, circle3Original.Radius * scale);
 
-            // Tjek om cirklerne 1 og 2 er inde i hinanden.
-            if (d < Math.Abs(c1.Radius - c2.Radius))
-            {
-                return null;
-            }
+                // -- TRIN 1
+                // Tjek om cirklerne skærer hinanden, hvis ikke, så udvid radius.
+                // Derudover, tjek om cirklerne indeholder hinanden, hvis det er sandt har man i virkeligheden kun 2 cirkler
+                // og man kan ikke finde et enkelt centrum.
 
-            // - C0 — C2
-            dx = c2.X - c0.X;
-            dy = c2.Y - c0.Y;
+                // - C0 — C1
+                // dx and dy are the vertical and horizontal distances between
+                // the circle centers.
+                dx = c1.X - c0.X;
+                dy = c1.Y - c0.Y;
 
-            d = Math.Sqrt((dy * dy) + (dx * dx));
+                // Determine the straight-line distance between the centers.
+                d = Math.Sqrt((dy * dy) + (dx * dx));
 
-            // Tjek om cirklerne 0 og 2 skærer hinanden.
-            if (d > (c0.Radius + c2.Radius))
-            {
-                return CalculateThreeCircleIntersection(circle1Original, circle2Original, circle3Original, scale + EPSILON);
-            }
+                // Tjek om cirklerne 0 og 1 skærer hinanden.
+                if (d > (c0.Radius + c1.Radius))
+                {
+                    continue;
+                }
 
-            // Tjek om cirklerne 0 og 2 er inde i hinanden.
-            if (d < Math.Abs(c0.Radius - c2.Radius))
-            {
-                return null;
-            }
+                // Tjek om cirklerne 0 og 1 er inde i hinanden.
+                if (d < Math.Abs(c0.Radius - c1.Radius))
+                {
+                    return null;
+                }
 
-            // -- TRIN 2: find alle skæringspunkter
-            List<Point> intersectionPoints = new List<Point>(6);
+                // - C1 — C2
+                dx = c2.X - c1.X;
+                dy = c2.Y - c1.Y;
 
-            intersectionPoints.AddRange(FindRadicalPoints(c0, c1));
-            intersectionPoints.AddRange(FindRadicalPoints(c1, c2));
-            intersectionPoints.AddRange(FindRadicalPoints(c2, c0));
+                d = Math.Sqrt((dy * dy) + (dx * dx));
 
-            // -- TRIN 3 skal finde de tætteste punkter.
-            List<(double, Point)> distances = new List<(double, Point)>(intersectionPoints.Count);
+                // Tjek om cirklerne 1 og 2 skærer hiannden.
+                if (d > (c1.Radius + c2.Radius))
+                {
+                    continue;
+                }
 
-            Point[] receivers = new Point[]
-            {
+                // Tjek om cirklerne 1 og 2 er inde i hinanden.
+                if (d < Math.Abs(c1.Radius - c2.Radius))
+                {
+                    return null;
+                }
+
+                // - C0 — C2
+                dx = c2.X - c0.X;
+                dy = c2.Y - c0.Y;
+
+                d = Math.Sqrt((dy * dy) + (dx * dx));
+
+                // Tjek om cirklerne 0 og 2 skærer hinanden.
+                if (d > (c0.Radius + c2.Radius))
+                {
+                    continue;
+                }
+
+                // Tjek om cirklerne 0 og 2 er inde i hinanden.
+                if (d < Math.Abs(c0.Radius - c2.Radius))
+                {
+                    return null;
+                }
+
+                // -- TRIN 2: find alle skæringspunkter
+                List<Point> intersectionPoints = new List<Point>(6);
+
+                intersectionPoints.AddRange(FindRadicalPoints(c0, c1));
+                intersectionPoints.AddRange(FindRadicalPoints(c1, c2));
+                intersectionPoints.AddRange(FindRadicalPoints(c2, c0));
+
+                // -- TRIN 3 skal finde de tætteste punkter.
+                List<(double, Point)> distances = new List<(double, Point)>(intersectionPoints.Count);
+
+                Point[] receivers = new Point[]
+                {
                 new Point(c0.X, c0.Y),
                 new Point(c1.X, c1.Y),
                 new Point(c2.X, c2.Y),
-            };
+                };
 
-            distances.AddRange(from Point item in intersectionPoints
-                               select (SumOfDistances(item, receivers), item));
+                distances.AddRange(from Point item in intersectionPoints
+                                   select (SumOfDistances(item, receivers), item));
 
-            var sortedDistances = from intersectionPoint in distances
-                                  orderby intersectionPoint.Item1 ascending
-                                  select intersectionPoint.Item2;
+                var sortedDistances = from intersectionPoint in distances
+                                      orderby intersectionPoint.Item1 ascending
+                                      select intersectionPoint.Item2;
 
-            IEnumerable<Point> centerIntersections = sortedDistances.Take(3);
+                IEnumerable<Point> centerIntersections = sortedDistances.Take(3);
 
-            // -- TRIN 4: Find det centrum de tre punkter udgør
-            Point sum = Point.Zero;
-            foreach (Point item in centerIntersections)
-            {
-                sum += item;
+                // -- TRIN 4: Find det centrum de tre punkter udgør
+                Point sum = Point.Zero;
+                foreach (Point item in centerIntersections)
+                {
+                    sum += item;
+                }
+
+                //Console.WriteLine("Scale: " + scale);
+
+                // TODO: Eksperimenter med vinkelhalverings ting.
+                return new Point(sum.X / centerIntersections.Count(), sum.Y / centerIntersections.Count());
             }
 
-            Console.WriteLine("Scale: " + scale);
-
-            // TODO: Eksperimenter med vinkelhalverings ting.
-            return new Point(sum.X / centerIntersections.Count(), sum.Y / centerIntersections.Count());
+            return null;
         }
 
         private static IEnumerable<Point> FindRadicalPoints(Circle c0, Circle c1)

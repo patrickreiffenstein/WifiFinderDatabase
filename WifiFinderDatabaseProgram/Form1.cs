@@ -14,6 +14,7 @@ namespace WifiFinderDatabaseProgram
         public Form1()
         {
             InitializeComponent();
+            buttonRefreshComPorts_Click(null, null);
         }
 
         private void buttonRefreshComPorts_Click(object sender, EventArgs e)
@@ -67,21 +68,6 @@ namespace WifiFinderDatabaseProgram
             serialPort3.Open();
         }
 
-        private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            
-        }
-
-        private void serialPort2_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-
-        }
-
-        private void serialPort3_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-
-        }
-
         private void buttonStartPulling_Click(object sender, EventArgs e)
         {
             timerSerialPortPull.Enabled = true;
@@ -102,6 +88,8 @@ namespace WifiFinderDatabaseProgram
                 serialPort2,
                 serialPort3
             };
+
+            WifiFinderSystem.WifiFinderSystem.RefreshData(5);
 
             foreach (var item in serialPorts)
             {
@@ -149,6 +137,8 @@ namespace WifiFinderDatabaseProgram
                     textChangeDelegate();
                 }
             }
+
+            labelDataCount.Text = WifiFinderSystem.WifiFinderSystem.CountDataEntries().ToString();
 
             NetworkLoop();
         }

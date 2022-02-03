@@ -49,6 +49,7 @@ namespace WifiFinderSystem
 
                 num += devicePackets.Count;
             }
+
             return num;
         }
 
@@ -95,7 +96,7 @@ namespace WifiFinderSystem
             // MAC;DEVICE1.rssi,DEVIC2.rssi,DEVICE3.rssi
             foreach (var item in GetMedianRSSi())
             {
-                sb.Append(item.Key);
+                sb.Append(item.Key.ToString("X2"));
                 sb.Append(';');
 
                 foreach (var capturedByDevice in item.Value)
