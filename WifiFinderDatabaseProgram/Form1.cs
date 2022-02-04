@@ -166,28 +166,20 @@ namespace WifiFinderDatabaseProgram
                     continue;
                 }
 
-                if (item.Available <= 0)
-                {
-                    continue;
-                }
-
                 NetworkStream stream = item.GetStream();
 
-                if (stream.ReadByte() == 1)
+                if (data is null)
                 {
-                    if (data is null)
-                    {
-                        data = Encoding.ASCII.GetBytes(WifiFinderSystem.WifiFinderSystem.PrepareSerializedData());
-                    }
-
-                    byte[] lengthBytes = BitConverter.GetBytes((uint)data.Length);
-
-                    // skriv data længden.
-                    stream.Write(lengthBytes, 0, lengthBytes.Length);
-
-                    // skriv data til stream.
-                    stream.Write(data, 0, data.Length);
+                    data = Encoding.ASCII.GetBytes(WifiFinderSystem.WifiFinderSystem.PrepareSerializedData());
                 }
+
+                byte[] lengthBytes = BitConverter.GetBytes((uint)data.Length);
+
+                // skriv data længden.
+                stream.Write(lengthBytes, 0, lengthBytes.Length);
+
+                // skriv data til stream.
+                stream.Write(data, 0, data.Length);
             }
         }
 
