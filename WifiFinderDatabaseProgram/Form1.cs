@@ -82,29 +82,29 @@ namespace WifiFinderDatabaseProgram
 
         private void timerSerialPortPull_Tick(object sender, EventArgs e)
         {
-            List<SerialPort> serialPorts = new List<SerialPort>()
+            List<(SerialPort, byte)> serialPorts = new List<(SerialPort, byte)>()
             {
-                serialPort1,
-                serialPort2,
-                serialPort3
+                (serialPort1, (byte)numericUpDownComPort1ID.Value),
+                (serialPort2, (byte)numericUpDownComPort2ID.Value),
+                (serialPort3, (byte)numericUpDownComPort3ID.Value)
             };
 
             WifiFinderSystem.WifiFinderSystem.RefreshData(5);
 
             foreach (var item in serialPorts)
             {
-                if (!item.IsOpen)
+                if (!item.Item1.IsOpen)
                 {
                     continue;
                 }
 
                 StringBuilder sb = new StringBuilder();
 
-                byte deviceID = byte.Parse(item.PortName.Replace("COM", ""));
+                byte deviceID = item.Item2;
                 
-                while (item.BytesToRead > 0)
+                while (item.Item1.BytesToRead > 0)
                 {
-                    string readData = item.ReadLine();
+                    string readData = item.Item1.ReadLine();
 
                     try
                     {
@@ -120,7 +120,7 @@ namespace WifiFinderDatabaseProgram
                         sb.AppendLine("Exception: " + ex);
                     }
 
-                    sb.Append($"{item.PortName};{readData}\n");
+                    sb.Append($"{item.Item1.PortName};{readData}\n");
                 }
 
                 MethodInvoker textChangeDelegate = delegate ()

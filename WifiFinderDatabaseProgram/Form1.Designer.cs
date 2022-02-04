@@ -50,14 +50,20 @@ namespace WifiFinderDatabaseProgram
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.buttonStartServer = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.labelDataCount = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDownComPort1ID = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownComPort2ID = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownComPort3ID = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComPort1ID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComPort2ID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComPort3ID)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBoxComPort1
@@ -65,12 +71,15 @@ namespace WifiFinderDatabaseProgram
             this.comboBoxComPort1.FormattingEnabled = true;
             this.comboBoxComPort1.Location = new System.Drawing.Point(6, 30);
             this.comboBoxComPort1.Name = "comboBoxComPort1";
-            this.comboBoxComPort1.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxComPort1.Size = new System.Drawing.Size(82, 24);
             this.comboBoxComPort1.TabIndex = 0;
             this.comboBoxComPort1.SelectedIndexChanged += new System.EventHandler(this.comboBoxComPort1_SelectedIndexChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.numericUpDownComPort3ID);
+            this.groupBox1.Controls.Add(this.numericUpDownComPort2ID);
+            this.groupBox1.Controls.Add(this.numericUpDownComPort1ID);
             this.groupBox1.Controls.Add(this.buttonRefreshComPorts);
             this.groupBox1.Controls.Add(this.comboBoxComPort3);
             this.groupBox1.Controls.Add(this.comboBoxComPort2);
@@ -97,7 +106,7 @@ namespace WifiFinderDatabaseProgram
             this.comboBoxComPort3.FormattingEnabled = true;
             this.comboBoxComPort3.Location = new System.Drawing.Point(6, 90);
             this.comboBoxComPort3.Name = "comboBoxComPort3";
-            this.comboBoxComPort3.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxComPort3.Size = new System.Drawing.Size(82, 24);
             this.comboBoxComPort3.TabIndex = 2;
             this.comboBoxComPort3.SelectedIndexChanged += new System.EventHandler(this.comboBoxComPort3_SelectedIndexChanged);
             // 
@@ -106,7 +115,7 @@ namespace WifiFinderDatabaseProgram
             this.comboBoxComPort2.FormattingEnabled = true;
             this.comboBoxComPort2.Location = new System.Drawing.Point(6, 60);
             this.comboBoxComPort2.Name = "comboBoxComPort2";
-            this.comboBoxComPort2.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxComPort2.Size = new System.Drawing.Size(82, 24);
             this.comboBoxComPort2.TabIndex = 1;
             this.comboBoxComPort2.SelectedIndexChanged += new System.EventHandler(this.comboBoxComPort2_SelectedIndexChanged);
             // 
@@ -245,6 +254,15 @@ namespace WifiFinderDatabaseProgram
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Data stats";
             // 
+            // labelDataCount
+            // 
+            this.labelDataCount.AutoSize = true;
+            this.labelDataCount.Location = new System.Drawing.Point(86, 28);
+            this.labelDataCount.Name = "labelDataCount";
+            this.labelDataCount.Size = new System.Drawing.Size(16, 17);
+            this.labelDataCount.TabIndex = 1;
+            this.labelDataCount.Text = "0";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -254,14 +272,71 @@ namespace WifiFinderDatabaseProgram
             this.label1.TabIndex = 0;
             this.label1.Text = "Mængde: ";
             // 
-            // labelDataCount
+            // numericUpDownComPort1ID
             // 
-            this.labelDataCount.AutoSize = true;
-            this.labelDataCount.Location = new System.Drawing.Point(86, 28);
-            this.labelDataCount.Name = "labelDataCount";
-            this.labelDataCount.Size = new System.Drawing.Size(16, 17);
-            this.labelDataCount.TabIndex = 1;
-            this.labelDataCount.Text = "0";
+            this.numericUpDownComPort1ID.Location = new System.Drawing.Point(95, 30);
+            this.numericUpDownComPort1ID.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numericUpDownComPort1ID.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownComPort1ID.Name = "numericUpDownComPort1ID";
+            this.numericUpDownComPort1ID.Size = new System.Drawing.Size(37, 22);
+            this.numericUpDownComPort1ID.TabIndex = 4;
+            this.numericUpDownComPort1ID.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDownComPort2ID
+            // 
+            this.numericUpDownComPort2ID.Location = new System.Drawing.Point(95, 60);
+            this.numericUpDownComPort2ID.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numericUpDownComPort2ID.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownComPort2ID.Name = "numericUpDownComPort2ID";
+            this.numericUpDownComPort2ID.Size = new System.Drawing.Size(37, 22);
+            this.numericUpDownComPort2ID.TabIndex = 5;
+            this.numericUpDownComPort2ID.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDownComPort3ID
+            // 
+            this.numericUpDownComPort3ID.Location = new System.Drawing.Point(95, 90);
+            this.numericUpDownComPort3ID.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numericUpDownComPort3ID.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownComPort3ID.Name = "numericUpDownComPort3ID";
+            this.numericUpDownComPort3ID.Size = new System.Drawing.Size(37, 22);
+            this.numericUpDownComPort3ID.TabIndex = 6;
+            this.numericUpDownComPort3ID.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
@@ -279,6 +354,9 @@ namespace WifiFinderDatabaseProgram
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComPort1ID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComPort2ID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComPort3ID)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -308,6 +386,9 @@ namespace WifiFinderDatabaseProgram
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label labelDataCount;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericUpDownComPort3ID;
+        private System.Windows.Forms.NumericUpDown numericUpDownComPort2ID;
+        private System.Windows.Forms.NumericUpDown numericUpDownComPort1ID;
     }
 }
 
