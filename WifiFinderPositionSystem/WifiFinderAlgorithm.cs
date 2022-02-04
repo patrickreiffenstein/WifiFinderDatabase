@@ -6,14 +6,6 @@ namespace WifiFinderAlgorithm
 {
     public static class WifiFinderAlgorithm
     {
-        /*
-        public Receiver[] receivers = new Receiver[3]
-        {
-            new Receiver(new Coordinate(1, 1), 2),
-            new Receiver(new Coordinate(1, 5), 3),
-            new Receiver(new Coordinate(7, 1), 2),
-        };*/
-
         public static Point? FindDevice(params Receiver[] receivers)
         {
             if (receivers.Length < 3)
@@ -29,6 +21,7 @@ namespace WifiFinderAlgorithm
             return CalculateThreeCircleIntersection(circleArray[0], circleArray[1], circleArray[2]);
         }
 
+        [Obsolete]
         public static Coordinate FindUnit(Receiver[] receivers)
         {
             if (receivers.Length < 3)
@@ -222,8 +215,6 @@ namespace WifiFinderAlgorithm
                 {
                     sum += item;
                 }
-
-                //Console.WriteLine("Scale: " + scale);
 
                 // TODO: Eksperimenter med vinkelhalverings ting.
                 return new Point(sum.X / centerIntersections.Count(), sum.Y / centerIntersections.Count());

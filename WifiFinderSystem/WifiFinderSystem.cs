@@ -7,6 +7,8 @@ namespace WifiFinderSystem
 {
     public static class WifiFinderSystem
     {
+        private static readonly Dictionary<long, Queue<Data>> dataDictionary = new Dictionary<long, Queue<Data>>();
+
         public readonly struct Data
         {
             public readonly byte ID;
@@ -21,11 +23,9 @@ namespace WifiFinderSystem
             }
         }
 
-        static Dictionary<long, Queue<Data>> dataDictionary = new Dictionary<long, Queue<Data>>();
-
-        public static void RefreshData(int maxAge)
+        public static void RefreshData(int maxAgeSeconds)
         {
-            DateTime nowOffset = DateTime.Now.Subtract(TimeSpan.FromSeconds(maxAge));
+            DateTime nowOffset = DateTime.Now.Subtract(TimeSpan.FromSeconds(maxAgeSeconds));
 
             foreach (KeyValuePair<long, Queue<Data>> singleDevice in dataDictionary)
             {
@@ -96,7 +96,12 @@ namespace WifiFinderSystem
             // MAC;DEVICE1.rssi,DEVIC2.rssi,DEVICE3.rssi
             foreach (var item in GetMedianRSSi())
             {
-                sb.Append(item.Key.ToString("X2"));
+                if (item.Value.Count == 0)
+                {
+                    continue;
+                }
+
+                sb.Append(item.Key);
                 sb.Append(';');
 
                 foreach (var capturedByDevice in item.Value)
