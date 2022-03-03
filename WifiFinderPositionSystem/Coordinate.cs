@@ -2,13 +2,13 @@
 {
     public class Coordinate
     {
-        public float x;
-        public float y;
+        public float X;
+        public float Y;
 
-        public Coordinate(float X, float Y)
+        public Coordinate(float x, float y)
         {
-            x = X;
-            y = Y;
+            this.X = x;
+            this.Y = y;
         }
     }
 }

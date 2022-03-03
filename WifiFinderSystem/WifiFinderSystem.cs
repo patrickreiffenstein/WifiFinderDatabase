@@ -57,8 +57,10 @@ namespace WifiFinderSystem
         {
             Dictionary<long, Dictionary<byte, byte>> medianValues = new Dictionary<long, Dictionary<byte, byte>>();
 
-            foreach (var macDevice in dataDictionary)
+            // Omdan liste af datapunkter til brugbar dictionary
+            foreach (KeyValuePair<long, Queue<Data>> macDevice in dataDictionary)
             {
+                // Omstrukturer liste fra 'MAC;Device ID,RSSi' til 'Device ID;RSSi liste'
                 Dictionary<byte, List<byte>> temporaryValues = new Dictionary<byte, List<byte>>();
                 foreach (Data data in macDevice.Value)
                 {
@@ -72,15 +74,12 @@ namespace WifiFinderSystem
                 }
 
                 medianValues[macDevice.Key] = new Dictionary<byte, byte>();
-
-                foreach (var item in temporaryValues)
+                foreach (var (ID, rssiValues) in from item in temporaryValues
+                                                   select (item.Key, item.Value))
                 {
-                    List<byte> rssiValues = item.Value;
                     rssiValues.Sort();
-
                     byte median = rssiValues[rssiValues.Count / 2];
-
-                    medianValues[macDevice.Key][item.Key] = median;
+                    medianValues[macDevice.Key][ID] = median;
                 }
             }
 

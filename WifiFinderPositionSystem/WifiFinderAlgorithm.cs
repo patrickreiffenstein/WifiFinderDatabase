@@ -14,7 +14,7 @@ namespace WifiFinderAlgorithm
             }
 
             var circles = from receiver in receivers
-                          select new Circle(receiver.coordinate.x, receiver.coordinate.y, receiver.signalStrength);
+                          select new Circle(receiver.coordinate.X, receiver.coordinate.Y, receiver.signalStrength);
 
             Circle[] circleArray = circles.ToArray();
 
@@ -38,12 +38,12 @@ namespace WifiFinderAlgorithm
             float scale = 1;
 
             // Gør den størrer hvis den er for lille
-            distBetweenReceivers0_1 = Math.Sqrt(Math.Pow(receivers[0].coordinate.x + receivers[1].coordinate.x, 2) + Math.Pow(receivers[0].coordinate.y + receivers[1].coordinate.y, 2));
-            distBetweenReceivers1_2 = Math.Sqrt(Math.Pow(receivers[1].coordinate.x + receivers[2].coordinate.x, 2) + Math.Pow(receivers[1].coordinate.y + receivers[2].coordinate.y, 2));
-            distBetweenReceivers2_0 = Math.Sqrt(Math.Pow(receivers[2].coordinate.x + receivers[0].coordinate.x, 2) + Math.Pow(receivers[2].coordinate.y + receivers[0].coordinate.y, 2));
+            distBetweenReceivers0_1 = Math.Sqrt(Math.Pow(receivers[0].coordinate.X + receivers[1].coordinate.X, 2) + Math.Pow(receivers[0].coordinate.Y + receivers[1].coordinate.Y, 2));
+            distBetweenReceivers1_2 = Math.Sqrt(Math.Pow(receivers[1].coordinate.X + receivers[2].coordinate.X, 2) + Math.Pow(receivers[1].coordinate.Y + receivers[2].coordinate.Y, 2));
+            distBetweenReceivers2_0 = Math.Sqrt(Math.Pow(receivers[2].coordinate.X + receivers[0].coordinate.X, 2) + Math.Pow(receivers[2].coordinate.Y + receivers[0].coordinate.Y, 2));
 
-            float dx = receivers[0].coordinate.x - receivers[1].coordinate.x;
-            float dy = receivers[0].coordinate.y - receivers[1].coordinate.y;
+            float dx = receivers[0].coordinate.X - receivers[1].coordinate.X;
+            float dy = receivers[0].coordinate.Y - receivers[1].coordinate.Y;
 
             double d = Math.Sqrt(dy * dy + dx * dx);
 
@@ -77,8 +77,8 @@ namespace WifiFinderAlgorithm
 
             double a = ((receivers[0].signalStrength * receivers[0].signalStrength) - (receivers[1].signalStrength * receivers[1].signalStrength) + (d * d)) / (2 * d);
 
-            double point2x = receivers[0].coordinate.x + (dx * a / d);
-            double point2y = receivers[0].coordinate.y + (dy * a / d);
+            double point2x = receivers[0].coordinate.X + (dx * a / d);
+            double point2y = receivers[0].coordinate.Y + (dy * a / d);
 
             double h = Math.Sqrt(receivers[0].signalStrength * receivers[0].signalStrength - a * a);
 
@@ -195,9 +195,9 @@ namespace WifiFinderAlgorithm
 
                 Point[] receivers = new Point[]
                 {
-                new Point(c0.X, c0.Y),
-                new Point(c1.X, c1.Y),
-                new Point(c2.X, c2.Y),
+                    new Point(c0.X, c0.Y),
+                    new Point(c1.X, c1.Y),
+                    new Point(c2.X, c2.Y),
                 };
 
                 distances.AddRange(from Point item in intersectionPoints
