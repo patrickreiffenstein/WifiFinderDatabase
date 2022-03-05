@@ -61,7 +61,13 @@ namespace WifiFinderSystem
             foreach (KeyValuePair<long, Queue<Data>> macDevice in dataDictionary)
             {
                 // Omstrukturer liste fra 'MAC;Device ID,RSSi' til 'Device ID;RSSi liste'
-                Dictionary<byte, List<byte>> temporaryValues = new Dictionary<byte, List<byte>>();
+                // linq
+                Dictionary<byte, List<byte>> temporaryValues = macDevice.Value
+                    .GroupBy(data => data.ID, data => data.RSSi)
+                    .ToDictionary(x => x.Key, x => x.ToList());
+
+                // ikke-linq
+                /*Dictionary<byte, List<byte>> temporaryValues = new Dictionary<byte, List<byte>>();
                 foreach (Data data in macDevice.Value)
                 {
                     if (!temporaryValues.TryGetValue(data.ID, out List<byte> rssiValues))
@@ -71,7 +77,7 @@ namespace WifiFinderSystem
                     }
 
                     rssiValues.Add(data.RSSi);
-                }
+                }*/
 
                 medianValues[macDevice.Key] = new Dictionary<byte, byte>();
                 foreach (var (ID, rssiValues) in from item in temporaryValues
